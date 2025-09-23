@@ -77,6 +77,8 @@ pip install -r requirements.txt
 2. Create account/sign in → **API Keys** → Create new key
 3. Copy the key (starts with `sk-...`)
 
+If you meet issues accessing overseas services due to the lack of a Visa or Mastercard, please check out [the alternative version](https://github.com/ZhaoYi-10-13/Gary-Agent-RAG) of this repository. That version uses Chinese APIs to ensure the project runs smoothly (Supabase is still required, but the free tier fully covers this project).
+
 ### Step 3: Configure Environment
 
 ```bash
