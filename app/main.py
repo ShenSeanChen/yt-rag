@@ -11,7 +11,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, Response, JSONResponse
 
 from .core.config import get_settings
 from .core.database import db
@@ -240,20 +240,26 @@ async def answer_question(request: AnswerRequest):
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
     """Handle 404 errors."""
-    return {
-        "error": "Not Found",
-        "detail": "The requested endpoint does not exist",
-        "available_endpoints": ["/", "/healthz", "/seed", "/answer", "/docs"]
-    }
+    return JSONResponse(
+        status_code=404,
+        content={
+            "error": "Not Found",
+            "detail": "The requested endpoint does not exist",
+            "available_endpoints": ["/", "/healthz", "/seed", "/answer", "/docs"]
+        }
+    )
 
 
 @app.exception_handler(500)
 async def internal_error_handler(request, exc):
     """Handle 500 errors."""
     logger.error(f"Internal server error: {exc}")
-    return ErrorResponse(
-        error="Internal Server Error",
-        detail="An unexpected error occurred. Please check the logs."
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": "Internal Server Error",
+            "detail": "An unexpected error occurred. Please check the logs."
+        }
     )
 
 
